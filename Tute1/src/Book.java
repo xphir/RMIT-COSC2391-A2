@@ -21,15 +21,15 @@ public class Book {
 		return title;
 	}
 
-	 public boolean borrow(String borrowerID) {
-		 if (this.borrowerID == null) {
-			 this.borrowerID = borrowerID;
-			 return true;
-		 } else {
-			 return false;
-		 }
-	 }
-	 
+	public boolean borrow(String borrowerID) {
+		if (this.borrowerID == null) {
+			this.borrowerID = borrowerID;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 // ...
 
 // method which allows the Book to be "returned" if it has been borrowed 
@@ -48,6 +48,7 @@ public class Book {
 	}
 
 // format Book details to a String (useful for printing!)
+	@Override
 	public String toString() {
 		return String.format(
 

@@ -12,11 +12,14 @@ import java.util.Scanner;
 // Ohm's law V=I/R .. https://en.wikipedia.org/wiki/Ohm%27s_law
 public class TuteLab01
 {
+	static boolean doAgain;
+
+	static Scanner scanner = new Scanner(System.in);
+
 	static double volts[];
 	static double amps[];
 	static double resistance[];
-	static Scanner scanner = new Scanner(System.in);
-	static boolean doAgain;
+
 	static double vavg;
 	static double vmax;
 	static double vmin;
@@ -26,7 +29,7 @@ public class TuteLab01
 	static double ravg;
 	static double rmax;
 	static double rmin;
-
+	
 	public static void main(String[] args)
 	{
 		volts = new double[3];
@@ -43,18 +46,15 @@ public class TuteLab01
 		calculateAmps();
 		calculateResistance();
 		
-		System.out.format("V (Volts) .. Avg=%f, Max=%f, Min=%f%n", vavg,vmax,vmin);
-		
-
-		System.out.format("I (Amperes) .. Avg=%f, Max=%f, Min=%f%n", iavg,imax,imin);
-		
-
-		System.out.format("R (Ohms) .. Avg=%f, Max=%f, Min=%f%n", ravg,rmax,rmin);
-
+		printResult("V (Volts)", vavg, vmax, vmin);
+		printResult("I (Amperes)", iavg, imax, imin);
+		printResult("R (Ohms)", iavg, imax, imin);
 		
 	}
 	
-
+	public static void printResult(String title, double avg, double max, double min) {
+		System.out.format("%s .. Avg= %.2f, Max= %.2f, Min= %.2f%n", title, avg, max, min);
+	}
 
 
 	public static void calculateVolts() {	

@@ -1,6 +1,10 @@
 package sadi.tutelab1.exercise;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import sadi.tutelab00.part2.Course;
 
 // Topic 1 tutelab exercise written by Caspar
 // this code lacks cohesion and encapsulation and is a prime example of how NOT to write code that is readable/reusable/extensible!
@@ -32,6 +36,9 @@ public class TuteLab01
 	
 	public static void main(String[] args)
 	{
+		Power[] resultsArray = new Power[3];
+		
+		
 		volts = new double[3];
 		amps = new double[3];
 		resistance = new double[3];
@@ -40,11 +47,16 @@ public class TuteLab01
 
 		System.out.println("Enter 3 pairs of V and I");
 
-		doLoop();
-
-		calculateVolts();
-		calculateAmps();
-		calculateResistance();
+		resultsArray = doLoop(resultsArray);
+		
+		for (int count = 0; count < 3; count++)
+		
+		double vavg;
+		vavg = getAvg(resultsArray);
+		
+		calculateVolts(resultsArray);
+		calculateAmps(resultsArray);
+		calculateResistance(resultsArray);
 		
 		printResult("V (Volts)", vavg, vmax, vmin);
 		printResult("I (Amperes)", iavg, imax, imin);
@@ -57,36 +69,45 @@ public class TuteLab01
 	}
 
 
-	public static void calculateVolts() {	
-		setVavg(getAvg(volts));
-		setVmax(getMax(volts));
-		setVmin(getMin(volts));
+	public static double calculateVolts(Power[] inputArray) {	
+		getAvg(volts);
+		getMax(volts);
+		getMin(volts);
 	}
 	
-	public static void calculateAmps() {
+	public static double calculateAmps(Power[] inputArray) {
 		setIavg(getAvg(amps));
 		setImax(getMax(amps));
 		setImin(getMin(amps));
 	}
 	
-	public static void calculateResistance() {
+	public static double calculateResistance(Power[] inputArray) {
 		setRavg(getAvg(resistance));
 		setRmax(getMax(resistance));
 		setRmin(getMin(resistance));
 	}
 	
-	public static void doLoop() {
-		
+	public static Power[] doLoop(Power[] inputArray) {
 		for (int count = 0; count < 3; count++)
 		{
-			volts[count] = doSingle("Enter Voltage (V) in volts: ");
 
-			amps[count] = doSingle("Enter Current (I) in amperes: ");
+			
+			double voltageResult;
+			double ampsResult;
+			double resistanceResult;
+			
+			voltageResult = doSingle("Enter Voltage (V) in volts: ");
+			
+			ampsResult = doSingle("Enter Current (I) in amperes: ");
 
-			resistance[count] = volts[count] / amps[count];
+			resistanceResult = volts[count] / amps[count];
 
 			System.out.format("Resistance R is %f ohms\n\n",resistance[count]);
+			
+			inputArray[count] = new Power(voltageResult, ampsResult, resistanceResult);
+			
 		}
+		return inputArray;
 	}
 	
 	
@@ -153,131 +174,5 @@ public class TuteLab01
 			// we don't really need to do anything here since we will just loop and try again, but could.
 		}
 		return num;
-	}
-
-
-
-
-	public static double getVavg() {
-		return vavg;
-	}
-
-
-
-
-	public static void setVavg(double vavg) {
-		TuteLab01.vavg = vavg;
-	}
-
-
-
-
-	public static double getVmax() {
-		return vmax;
-	}
-
-
-
-
-	public static void setVmax(double vmax) {
-		TuteLab01.vmax = vmax;
-	}
-
-
-
-
-	public static double getVmin() {
-		return vmin;
-	}
-
-
-
-
-	public static void setVmin(double vmin) {
-		TuteLab01.vmin = vmin;
-	}
-
-
-
-
-	public static double getIavg() {
-		return iavg;
-	}
-
-
-
-
-	public static void setIavg(double iavg) {
-		TuteLab01.iavg = iavg;
-	}
-
-
-
-
-	public static double getImax() {
-		return imax;
-	}
-
-
-
-
-	public static void setImax(double imax) {
-		TuteLab01.imax = imax;
-	}
-
-
-
-
-	public static double getImin() {
-		return imin;
-	}
-
-
-
-
-	public static void setImin(double imin) {
-		TuteLab01.imin = imin;
-	}
-
-
-
-
-	public static double getRavg() {
-		return ravg;
-	}
-
-
-
-
-	public static void setRavg(double ravg) {
-		TuteLab01.ravg = ravg;
-	}
-
-
-
-
-	public static double getRmax() {
-		return rmax;
-	}
-
-
-
-
-	public static void setRmax(double rmax) {
-		TuteLab01.rmax = rmax;
-	}
-
-
-
-
-	public static double getRmin() {
-		return rmin;
-	}
-
-
-
-
-	public static void setRmin(double rmin) {
-		TuteLab01.rmin = rmin;
 	}
 }

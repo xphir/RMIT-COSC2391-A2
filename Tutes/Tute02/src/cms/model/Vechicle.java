@@ -1,6 +1,6 @@
 package cms.model;
 
-public class Vechicle {
+public abstract class Vechicle {
 	private String RegistrationNumber;
 	private String Make;
 	private String Model;

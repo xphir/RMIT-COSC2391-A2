@@ -1,5 +1,7 @@
 package cms.model;
 
-public class CourierManagementSystemImpl {
+import cms.model.interfaces.CourierManagementSystem;
+
+public class CourierManagementSystemImpl implements CourierManagementSystem {
 
 }

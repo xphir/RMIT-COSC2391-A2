@@ -5,9 +5,9 @@ import model.interfaces.Player;
 public class SimplePlayer implements Player {
 
 	// As per
-	String playerId;
-	String playerName;
-	int initialPoints;
+	private String playerId;
+	private String playerName;
+	private int initialPoints;
 
 	public SimplePlayer(String playerId, String playerName, int initialPoints) {
 		super();

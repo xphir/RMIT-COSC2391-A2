@@ -43,50 +43,33 @@ import view.interfaces.GameEngineCallback;
 
 public class GameEngineImpl implements GameEngine {
 
-	//private GameEngineCallback gameEngineCallback;
-    private List<Player> players = new ArrayList<Player>();
-    Deque<PlayingCard> publicDeck = getShuffledDeck();
+	// private GameEngineCallback gameEngineCallback;
+	private List<Player> players = new ArrayList<Player>();
+	Deque<PlayingCard> publicDeck = getShuffledDeck();
 	ArrayList<GameEngineCallback> gameEngineCallbacks = new ArrayList<GameEngineCallback>();
-    		
+
 	@Override
 	public void dealPlayer(Player player, int delay) {
 		// TODO Auto-generated method stub
 		PlayingCard card;
 		int handScore = 0;
-		int finalResult = 0;
 		Boolean ongoing = true;
-		
+
 		do {
-			//removing the card and giving it to the player
+			// removing the card and giving it to the player
 			card = publicDeck.removeFirst();
-			
-			
-			//adding the dealt card to the hand total
+
+			// adding the dealt card to the hand total
 			handScore = handScore + card.getScore();
-			
-			//This adds the delay between hands
-			try{
-	            Thread.sleep(delay);
-	        } catch(InterruptedException e){
-	            e.printStackTrace();
-	        }
-			//logging the dealt card
-			if (handScore > BUST_LEVEL) {
-				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
-					aGameEngineCallback.bustCard(player, card, this);
-				}
-				finalResult = handScore - card.getScore();
-				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
-					aGameEngineCallback.result(player, finalResult, this);
-				}
-				player.setResult(finalResult);
-				ongoing = false;
-			} else {
-				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
-					aGameEngineCallback.nextCard(player, card, this);
-				}
-			}
-		//keep running through the hand till the player busts
+
+			// This adds the delay between hands
+			wait(delay);
+
+			// logging the dealt card
+			ongoing = bustHandle(player, handScore, card);
+
+
+		// keep running through the hand till the player busts
 		} while (ongoing);
 	}
 
@@ -95,39 +78,22 @@ public class GameEngineImpl implements GameEngine {
 		// TODO Auto-generated method stub
 		PlayingCard card;
 		int handScore = 0;
-		int finalResult = 0;
 		Boolean ongoing = true;
-		
+
 		do {
-			//removing the card and giving it to the player
+			// removing the card and giving it to the player
 			card = publicDeck.removeFirst();
-			
-			
-			//adding the dealt card to the hand total
+
+			// adding the dealt card to the hand total
 			handScore = handScore + card.getScore();
+
+			// This adds the delay between hands
+			wait(delay);
+
+			// logging the dealt card
+			ongoing = bustHandle(handScore, card);
 			
-			//This adds the delay between hands
-			try{
-	            Thread.sleep(delay);
-	        } catch(InterruptedException e){
-	            e.printStackTrace();
-	        }
-			//logging the dealt card
-			if (handScore > BUST_LEVEL) {
-				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
-					aGameEngineCallback.houseBustCard(card, this);
-				}
-				finalResult = handScore - card.getScore();
-				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
-					aGameEngineCallback.houseResult(finalResult, this);
-				}
-				ongoing = false;
-			} else {
-				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
-					aGameEngineCallback.nextHouseCard(card, this);
-				}
-			}
-		//keep running through the hand till the player busts
+		// keep running through the hand till the player busts
 		} while (ongoing);
 	}
 
@@ -179,29 +145,83 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public boolean placeBet(Player player, int bet) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result;
+		result = player.placeBet(bet);
+		return result;
 	}
 
 	@Override
 	public Deque<PlayingCard> getShuffledDeck() {
 		List<PlayingCard> newDeck = new ArrayList<PlayingCard>();
 		Deque<PlayingCard> shuffledDeck = new LinkedList<PlayingCard>();
-		
-		//Creates a brand new unshuffled deck
-		for(Suit suit : PlayingCard.Suit.values()) {
-	        for(Value value : PlayingCard.Value.values()) {
-	        	newDeck.add(new PlayingCardImpl(suit,value));
-	        }
-	    }
-		//Shuffles the new deck
+
+		// Creates a brand new unshuffled deck
+		for (Suit suit : PlayingCard.Suit.values()) {
+			for (Value value : PlayingCard.Value.values()) {
+				newDeck.add(new PlayingCardImpl(suit, value));
+			}
+		}
+		// Shuffles the new deck
 		Collections.shuffle(newDeck);
-		
-		//converts the deck into Deque form
-		for(PlayingCard card : newDeck) {
+
+		// converts the deck into Deque form
+		for (PlayingCard card : newDeck) {
 			shuffledDeck.addLast(card);
 		}
 
 		return shuffledDeck;
 	}
+
+	private void wait(int delay) {
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//called by dealHost, does the logging and score management of dealHost, and on busting will return false
+	private boolean bustHandle(int handScore, PlayingCard card) {
+		int finalResult;
+		if (handScore > BUST_LEVEL) {
+			for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+				aGameEngineCallback.houseBustCard(card, this);
+			}
+			finalResult = handScore - card.getScore();
+			for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+				aGameEngineCallback.houseResult(finalResult, this);
+			}
+			return false;
+		} else {
+			for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+				aGameEngineCallback.nextHouseCard(card, this);
+			}
+			return true;
+		}
+
+	}
+	
+	//Method overloading the host version of bustHandle, see above
+	private boolean bustHandle(Player player, int handScore, PlayingCard card) {
+		int finalResult;
+		if (handScore > BUST_LEVEL) {
+			finalResult = handScore - card.getScore();
+			player.setResult(finalResult);
+
+			for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+				aGameEngineCallback.bustCard(player, card, this);
+			}
+			for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+				aGameEngineCallback.result(player, finalResult, this);
+			}
+
+			return false;
+		} else {
+			for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+				aGameEngineCallback.nextCard(player, card, this);
+			}
+			return true;
+		}
+	}
+
 }

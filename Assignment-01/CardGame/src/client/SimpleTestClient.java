@@ -39,8 +39,7 @@ public class SimpleTestClient
       Validator.validate(true);
 
       // create two test players
-      Player[] players = new Player[] { new SimplePlayer("1", "The Shark", 1000), new SimplePlayer("2", "The Loser",
-         500) };
+      Player[] players = new Player[] { new SimplePlayer("1", "The Shark", 1000), new SimplePlayer("2", "The Loser", 500)};
 
       // add logging callback
       gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());

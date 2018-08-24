@@ -8,10 +8,7 @@ public class SimplePlayer implements Player {
 	private String playerID;
 	private String playerName;
 	private int initialPoints;
-	
-	//Are the following needed?
 	private int bet;
-	//private List<PlayingCard> cards;
 	private int result;
 	
 	public SimplePlayer(String playerID, String playerName, int initialPoints) {

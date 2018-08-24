@@ -122,6 +122,4 @@ public class GameEngineImpl implements GameEngine {
 	    }
 		return shuffledDeck;
 	}
-
-	
 }

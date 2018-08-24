@@ -1,6 +1,5 @@
 package model;
 
-import model.interfaces.DicePair;
 import model.interfaces.Player;
 
 public class SimplePlayer implements Player {
@@ -9,12 +8,14 @@ public class SimplePlayer implements Player {
 	private String playerID;
 	private String playerName;
 	private int initialPoints;
-	//Is this needed?
+	
+	//Are the following needed?
 	private int bet;
-
+	//private List<PlayingCard> cards;
+	private int result;
+	
 	public SimplePlayer(String playerID, String playerName, int initialPoints) {
-		super();
-		this.playerID = playerId;
+		this.playerID = playerID;
 		this.playerName = playerName;
 		this.initialPoints = initialPoints;
 	}
@@ -46,7 +47,7 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public boolean placeBet(int bet) {
-		if (bet<=initialPoints) 
+		if (bet >= 0 && bet<=initialPoints) 
 		{
 			this.bet=bet;
 			return true;
@@ -69,14 +70,12 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public int getResult() {
-		// TODO Auto-generated method stub
-		return 0;
+		return result;
 	}
 
 	@Override
 	public void setResult(int result) {
-		// TODO Auto-generated method stub
-
+		this.result=result;
 	}
 
 	@Override

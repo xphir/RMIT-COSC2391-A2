@@ -1,11 +1,17 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 
 import model.interfaces.GameEngine;
 import model.interfaces.Player;
 import model.interfaces.PlayingCard;
+import model.interfaces.PlayingCard.Suit;
+import model.interfaces.PlayingCard.Value;
 import view.interfaces.GameEngineCallback;
 
 /**
@@ -37,6 +43,11 @@ import view.interfaces.GameEngineCallback;
 
 public class GameEngineImpl implements GameEngine {
 
+	//private GameEngineCallback gameEngineCallback;
+    private List<Player> players = new ArrayList<Player>();
+    
+	ArrayList<GameEngineCallback> gameEngineCallbacks = new ArrayList<GameEngineCallback>();
+    		
 	@Override
 	public void dealPlayer(Player player, int delay) {
 		// TODO Auto-generated method stub
@@ -51,38 +62,48 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public void addPlayer(Player player) {
-		// TODO Auto-generated method stub
-		
+		players.add(player);
 	}
 
 	@Override
 	public Player getPlayer(String id) {
-		// TODO Auto-generated method stub
+		for (Player aplayer : players) {
+			if (aplayer.getPlayerId().equals(id))
+				return aplayer;
+		}
 		return null;
 	}
 
 	@Override
 	public boolean removePlayer(Player player) {
-		// TODO Auto-generated method stub
+		for (Player aplayer : players) {
+			if (player == aplayer) {
+				players.remove(aplayer);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
-		// TODO Auto-generated method stub
-		
+		gameEngineCallbacks.add(gameEngineCallback);
 	}
 
 	@Override
 	public boolean removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
-		// TODO Auto-generated method stub
+		for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+			if (gameEngineCallback == aGameEngineCallback) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public Collection<Player> getAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Player> immutablePlayerLists = Collections.unmodifiableList(players);
+		return immutablePlayerLists;
 	}
 
 	@Override
@@ -93,8 +114,13 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public Deque<PlayingCard> getShuffledDeck() {
-		// TODO Auto-generated method stub
-		return null;
+		Deque<PlayingCard> shuffledDeck = new LinkedList<PlayingCard>();
+		for(Suit suit : PlayingCard.Suit.values()) {
+	        for(Value value : PlayingCard.Value.values()) {
+	        	shuffledDeck.addLast(new PlayingCardImpl(suit,value));
+	        }
+	    }
+		return shuffledDeck;
 	}
 
 	

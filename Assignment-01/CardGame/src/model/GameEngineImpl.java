@@ -114,12 +114,23 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public Deque<PlayingCard> getShuffledDeck() {
+		List<PlayingCard> newDeck = new ArrayList<PlayingCard>();
 		Deque<PlayingCard> shuffledDeck = new LinkedList<PlayingCard>();
+		
+		//Creates a brand new unshuffled deck
 		for(Suit suit : PlayingCard.Suit.values()) {
 	        for(Value value : PlayingCard.Value.values()) {
-	        	shuffledDeck.addLast(new PlayingCardImpl(suit,value));
+	        	newDeck.add(new PlayingCardImpl(suit,value));
 	        }
 	    }
+		//Shuffles the new deck
+		Collections.shuffle(newDeck);
+		
+		//converts the deck into Deque form
+		for(PlayingCard card : newDeck) {
+			shuffledDeck.addLast(card);
+		}
+
 		return shuffledDeck;
 	}
 }

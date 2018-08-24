@@ -46,8 +46,8 @@ public class SimpleTestClient
       gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
 
       // Uncomment this to DEBUG your deck of cards creation
-      Deque<PlayingCard> shuffledDeck = gameEngine.getShuffledDeck();
-      printCards(shuffledDeck);
+      //Deque<PlayingCard> shuffledDeck = gameEngine.getShuffledDeck();
+      //printCards(shuffledDeck);
 
       // main loop to add players, place a bet and receive hand
       for (Player player : players)

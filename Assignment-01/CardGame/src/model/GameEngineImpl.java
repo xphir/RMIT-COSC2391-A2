@@ -45,19 +45,90 @@ public class GameEngineImpl implements GameEngine {
 
 	//private GameEngineCallback gameEngineCallback;
     private List<Player> players = new ArrayList<Player>();
-    
+    Deque<PlayingCard> publicDeck = getShuffledDeck();
 	ArrayList<GameEngineCallback> gameEngineCallbacks = new ArrayList<GameEngineCallback>();
     		
 	@Override
 	public void dealPlayer(Player player, int delay) {
 		// TODO Auto-generated method stub
+		PlayingCard card;
+		int handScore = 0;
+		int finalResult = 0;
+		Boolean ongoing = true;
 		
+		do {
+			//removing the card and giving it to the player
+			card = publicDeck.removeFirst();
+			
+			
+			//adding the dealt card to the hand total
+			handScore = handScore + card.getScore();
+			
+			//This adds the delay between hands
+			try{
+	            Thread.sleep(delay);
+	        } catch(InterruptedException e){
+	            e.printStackTrace();
+	        }
+			//logging the dealt card
+			if (handScore > BUST_LEVEL) {
+				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+					aGameEngineCallback.bustCard(player, card, this);
+				}
+				finalResult = handScore - card.getScore();
+				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+					aGameEngineCallback.result(player, finalResult, this);
+				}
+				player.setResult(finalResult);
+				ongoing = false;
+			} else {
+				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+					aGameEngineCallback.nextCard(player, card, this);
+				}
+			}
+		//keep running through the hand till the player busts
+		} while (ongoing);
 	}
 
 	@Override
 	public void dealHouse(int delay) {
 		// TODO Auto-generated method stub
+		PlayingCard card;
+		int handScore = 0;
+		int finalResult = 0;
+		Boolean ongoing = true;
 		
+		do {
+			//removing the card and giving it to the player
+			card = publicDeck.removeFirst();
+			
+			
+			//adding the dealt card to the hand total
+			handScore = handScore + card.getScore();
+			
+			//This adds the delay between hands
+			try{
+	            Thread.sleep(delay);
+	        } catch(InterruptedException e){
+	            e.printStackTrace();
+	        }
+			//logging the dealt card
+			if (handScore > BUST_LEVEL) {
+				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+					aGameEngineCallback.houseBustCard(card, this);
+				}
+				finalResult = handScore - card.getScore();
+				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+					aGameEngineCallback.houseResult(finalResult, this);
+				}
+				ongoing = false;
+			} else {
+				for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
+					aGameEngineCallback.nextHouseCard(card, this);
+				}
+			}
+		//keep running through the hand till the player busts
+		} while (ongoing);
 	}
 
 	@Override

@@ -1,67 +1,70 @@
 package model;
 
+import model.interfaces.DicePair;
 import model.interfaces.Player;
 
 public class SimplePlayer implements Player {
 
 	// As per
-	private String playerId;
+	private String playerID;
 	private String playerName;
 	private int initialPoints;
+	//Is this needed?
+	private int bet;
 
-	public SimplePlayer(String playerId, String playerName, int initialPoints) {
+	public SimplePlayer(String playerID, String playerName, int initialPoints) {
 		super();
-		this.playerId = playerId;
+		this.playerID = playerId;
 		this.playerName = playerName;
 		this.initialPoints = initialPoints;
 	}
 
 	@Override
 	public String getPlayerName() {
-		// TODO Auto-generated method stub
-		return null;
+		return playerName;
 	}
 
 	@Override
 	public void setPlayerName(String playerName) {
-		// TODO Auto-generated method stub
-
+		this.playerName=playerName;
 	}
 
 	@Override
 	public int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
+		return initialPoints;
 	}
 
 	@Override
 	public void setPoints(int points) {
-		// TODO Auto-generated method stub
-
+		this.initialPoints=points;
 	}
 
 	@Override
 	public String getPlayerId() {
-		// TODO Auto-generated method stub
-		return null;
+		return playerID;
 	}
 
 	@Override
 	public boolean placeBet(int bet) {
-		// TODO Auto-generated method stub
-		return false;
+		if (bet<=initialPoints) 
+		{
+			this.bet=bet;
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
 	}
 
 	@Override
 	public int getBet() {
-		// TODO Auto-generated method stub
-		return 0;
+		return bet;
 	}
 
 	@Override
 	public void resetBet() {
-		// TODO Auto-generated method stub
-
+		this.bet=0;
 	}
 
 	@Override
@@ -76,4 +79,11 @@ public class SimplePlayer implements Player {
 
 	}
 
+	@Override
+	public String toString() 
+	{
+		String stringFormat = String.format("Player: Id=%s, name=%s, points=%d", getPlayerId(),getPlayerName(),getPoints());
+		return stringFormat;
+	}
+	
 }

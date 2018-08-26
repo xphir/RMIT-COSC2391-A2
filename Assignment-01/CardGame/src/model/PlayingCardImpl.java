@@ -2,29 +2,35 @@ package model;
 
 import model.interfaces.PlayingCard;
 
-public class PlayingCardImpl implements PlayingCard {
+public class PlayingCardImpl implements PlayingCard
+{
 	private Suit suit;
 	private Value value;
-	
-	public PlayingCardImpl(Suit suit, Value value) {
+
+	public PlayingCardImpl(Suit suit, Value value)
+	{
 		super();
 		this.suit = suit;
 		this.value = value;
 	}
 
 	@Override
-	public Suit getSuit() {
+	public Suit getSuit()
+	{
 		return suit;
 	}
 
 	@Override
-	public Value getValue() {
+	public Value getValue()
+	{
 		return value;
 	}
 
 	@Override
-	public int getScore() {
-		switch (value) {
+	public int getScore()
+	{
+		switch (value)
+		{
 		case ACE:
 			return 1;
 		case TWO:
@@ -52,27 +58,30 @@ public class PlayingCardImpl implements PlayingCard {
 		case KING:
 			return 10;
 		default:
-			//this shouldn't happen unless there is no value
+			// this shouldn't happen unless there is no value
 			return 0;
 		}
 	}
 
 	@Override
-	public boolean equals(PlayingCard card) {
-		if (card.getSuit() == this.suit && card.getValue() == this.value) {
+	public boolean equals(PlayingCard card)
+	{
+		if (card.getSuit() == this.suit && card.getValue() == this.value)
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
-	
+
 	@Override
-	public String toString() 
+	public String toString()
 	{
-		//TODO
+		// TODO
 		String stringFormat = String.format("Suit: %s, Value: %s, Score: %d", getSuit(), getValue(), getScore());
 		return stringFormat;
 	}
-	
 
 }

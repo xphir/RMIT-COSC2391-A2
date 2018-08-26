@@ -17,28 +17,6 @@ import view.interfaces.GameEngineCallback;
 
 /**
  * 
- * &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& SPECIFICATION FROM PDF &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
- * 
- * This is where the main game functionality is contained. All methods from the client are called through 
- * this class (see footnote). Methods in the supporting classes should only be called from GameEngineImpl.
- * 
- * The main feature of this class that is likely different to previous code you have written is 
- * that the GameEngineImpl does not provide any output of its own (i.e. it SHOULD HAVE NO println() 
- * or log() statements other than for debugging and these should be commented or removed prior to submission). 
- * Instead it calls appropriate methods on the GameEngineCallback as it runs (see below) which is where 
- * all output is logged to the console for assignment part 1. 
- * 
- * This provides a good level of isolation and will allow you to use your GameEngineImpl unchanged 
- * in assignment 2 when we add a graphical AWT/Swing use interface!
- * 
- * NOTE: Your GameEngineImpl must maintain a collection (or array) of Players AND a 
- * collection (or array) of GameEngineCallbacks. When a callback method should be called 
- * this must be done in a loop iterating through all callbacks. Note that each callback receives 
- * the same data so there is no need to distinguish them (i.e. they are all the same and not 
- * player specific). SimpleTestClient.java gives an example for two players and shows it is trivial 
- * to add more (simply increase the array size by adding to the initialiser).  
- * 
- * &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
  * 
  */
 
@@ -54,9 +32,9 @@ public class GameEngineImpl implements GameEngine {
 		int handScore = 0;
 		Boolean ongoing = true;
 
-		//checks if a new deck is needed
+		// checks if a new deck is needed
 		newDeck();
-	
+
 		do {
 			// removing the card and giving it to the player
 			card = publicDeck.removeFirst();
@@ -70,8 +48,7 @@ public class GameEngineImpl implements GameEngine {
 			// logging the dealt card
 			ongoing = bustHandle(player, handScore, card);
 
-
-		// keep running through the hand till the player busts
+			// keep running through the hand till the player busts
 		} while (ongoing);
 	}
 
@@ -82,9 +59,9 @@ public class GameEngineImpl implements GameEngine {
 		int handScore = 0;
 		Boolean ongoing = true;
 
-		//checks if a new deck is needed
+		// checks if a new deck is needed
 		newDeck();
-		
+
 		do {
 			// removing the card and giving it to the player
 			card = publicDeck.removeFirst();
@@ -97,11 +74,11 @@ public class GameEngineImpl implements GameEngine {
 
 			// logging the dealt card + some other end of round work
 			ongoing = bustHandle(handScore, card);
-			
-		// keep running through the hand till the player busts
+
+			// keep running through the hand till the player busts
 		} while (ongoing);
-		
-		//The Round has ended, clear the old deck and get a new one
+
+		// The Round has ended, clear the old deck and get a new one
 		publicDeck = getShuffledDeck();
 	}
 
@@ -129,14 +106,14 @@ public class GameEngineImpl implements GameEngine {
 		}
 		return false;
 	}
-	
-	//DONE
+
+	// DONE
 	@Override
 	public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
 		gameEngineCallbacks.add(gameEngineCallback);
 	}
 
-	//DONE
+	// DONE
 	@Override
 	public boolean removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
 		for (GameEngineCallback aGameEngineCallback : gameEngineCallbacks) {
@@ -146,15 +123,15 @@ public class GameEngineImpl implements GameEngine {
 		}
 		return false;
 	}
-	
-	//DONE
+
+	// DONE
 	@Override
 	public Collection<Player> getAllPlayers() {
 		List<Player> immutablePlayerLists = Collections.unmodifiableList(players);
 		return immutablePlayerLists;
 	}
-	
-	//DONE
+
+	// DONE
 	@Override
 	public boolean placeBet(Player player, int bet) {
 		boolean result;
@@ -162,7 +139,8 @@ public class GameEngineImpl implements GameEngine {
 		return result;
 	}
 
-	//DONE - Might be better alway keeping it as a deque and shuffling that
+	// DONE - Might be better alway keeping it as a deque and shuffling that
+	// IMPORTANT NOTE THIS MAY BE CALLED A DEBUG METHOD, BUT IT IS USED ELSEWHERE
 	@Override
 	public Deque<PlayingCard> getShuffledDeck() {
 		List<PlayingCard> newDeck = new ArrayList<PlayingCard>();
@@ -174,7 +152,7 @@ public class GameEngineImpl implements GameEngine {
 				newDeck.add(new PlayingCardImpl(suit, value));
 			}
 		}
-		// Shuffles the new deck - cant shuffle a deque
+		// Shuffles the new deck - can't shuffle a Deque
 		Collections.shuffle(newDeck);
 
 		// converts the deck into Deque form
@@ -185,7 +163,7 @@ public class GameEngineImpl implements GameEngine {
 		return shuffledDeck;
 	}
 
-	//used to wait the delay inputed
+	// used to wait the delay inputed
 	private void wait(int delay) {
 		try {
 			Thread.sleep(delay);
@@ -194,8 +172,9 @@ public class GameEngineImpl implements GameEngine {
 		}
 	}
 
-	//THIS HANDLES HOSTS
-	//called by dealHost, does the logging and score management of dealHost, and on busting will return false
+	// THIS HANDLES HOSTS
+	// called by dealHost, does the logging and score management of dealHost, and
+	// on busting will return false
 	private boolean bustHandle(int handScore, PlayingCard card) {
 		int finalResult;
 		if (handScore > BUST_LEVEL) {
@@ -216,9 +195,9 @@ public class GameEngineImpl implements GameEngine {
 		}
 
 	}
-	
-	//THIS HANDLES PLAYERS
-	//Method overloading the host version of bustHandle, see above
+
+	// THIS HANDLES PLAYERS
+	// Method overloading the host version of bustHandle, see above
 	private boolean bustHandle(Player player, int handScore, PlayingCard card) {
 		int finalResult;
 		if (handScore > BUST_LEVEL) {
@@ -240,38 +219,35 @@ public class GameEngineImpl implements GameEngine {
 			return true;
 		}
 	}
-	
-	//Handles the end of round bet returns and the reset of bets.
+
+	// Handles the end of round bet returns and the reset of bets.
 	private void betHandle(int houseScore) {
 		for (Player aplayer : players) {
-			if (aplayer.getResult() >  houseScore) {
-				//player wins
+			if (aplayer.getResult() > houseScore) {
+				// player wins
 				aplayer.setPoints(aplayer.getPoints() + aplayer.getBet());
 				aplayer.resetBet();
-			}
-			else if (aplayer.getResult() ==  houseScore){
+			} else if (aplayer.getResult() == houseScore) {
 				aplayer.resetBet();
 			} else {
-				aplayer.setPoints(aplayer.getPoints() - aplayer.getBet());;
+				aplayer.setPoints(aplayer.getPoints() - aplayer.getBet());
+				;
 				aplayer.resetBet();
 			}
 		}
 
 	}
-	
+
 	private void newDeck() {
-		/* 1 + 1 + 1 + 1 = 4
-		2 + 2 + 2 + 2 = 8
-		3 + 3 + 3 + 3 = 12
-		4 + 8 + 12 = 24
-		Thus 12 cards is the highest ammount of cards that can be given per hand
-		thus if there is less than 12 cards you need a new deck
-		*/
+		/*
+		 * 1 + 1 + 1 + 1 = 4 2 + 2 + 2 + 2 = 8 3 + 3 + 3 + 3 = 12 4 + 8 + 12 = 24 Thus
+		 * 12 cards is the highest ammount of cards that can be given per hand thus if
+		 * there is less than 12 cards you need a new deck
+		 */
 		int minDeckSize = 12;
-		
-		if (publicDeck.size() <= minDeckSize)
-		{
-			//Get a new deck
+
+		if (publicDeck.size() <= minDeckSize) {
+			// Get a new deck
 			publicDeck = getShuffledDeck();
 		}
 	}

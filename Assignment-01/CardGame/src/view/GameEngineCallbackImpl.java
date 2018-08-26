@@ -42,14 +42,15 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	public void bustCard(Player player, PlayingCard card, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO, String.format("Card Dealt to %s .. %s ... YOU BUSTED!", player.getPlayerName(), card.toString()));
+		logger.log(Level.INFO,
+				String.format("Card Dealt to %s .. %s ... YOU BUSTED!", player.getPlayerName(), card.toString()));
 	}
 
 	@Override
 	public void houseBustCard(PlayingCard card, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO, String.format("Card Dealt to House .. %s ... YOU BUSTED!", card.toString()));		
+		logger.log(Level.INFO, String.format("Card Dealt to House .. %s ... YOU BUSTED!", card.toString()));
 	}
 
 	@Override

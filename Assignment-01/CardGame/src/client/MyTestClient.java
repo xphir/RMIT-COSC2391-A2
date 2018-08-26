@@ -54,6 +54,7 @@ public class MyTestClient {
 			gameEngine.addPlayer(player);
 		}
 
+		//This will test x players (playerCount) for x rounds (reqRunCount)
 		do {
 			for (Player player : testPlayers) {
 				gameEngine.placeBet(player, 100);

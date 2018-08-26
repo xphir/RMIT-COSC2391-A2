@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,10 +43,8 @@ import view.interfaces.GameEngineCallback;
  */
 
 public class GameEngineImpl implements GameEngine {
-
-	// private GameEngineCallback gameEngineCallback;
 	private List<Player> players = new ArrayList<Player>();
-	private Deque<PlayingCard> publicDeck = getShuffledDeck();
+	private Deque<PlayingCard> publicDeck = new ArrayDeque<PlayingCard>();
 	private ArrayList<GameEngineCallback> gameEngineCallbacks = new ArrayList<GameEngineCallback>();
 
 	@Override
@@ -55,6 +54,9 @@ public class GameEngineImpl implements GameEngine {
 		int handScore = 0;
 		Boolean ongoing = true;
 
+		//checks if a new deck is needed
+		newDeck();
+	
 		do {
 			// removing the card and giving it to the player
 			card = publicDeck.removeFirst();
@@ -80,6 +82,9 @@ public class GameEngineImpl implements GameEngine {
 		int handScore = 0;
 		Boolean ongoing = true;
 
+		//checks if a new deck is needed
+		newDeck();
+		
 		do {
 			// removing the card and giving it to the player
 			card = publicDeck.removeFirst();
@@ -90,11 +95,14 @@ public class GameEngineImpl implements GameEngine {
 			// This adds the delay between hands
 			wait(delay);
 
-			// logging the dealt card
+			// logging the dealt card + some other end of round work
 			ongoing = bustHandle(handScore, card);
 			
 		// keep running through the hand till the player busts
 		} while (ongoing);
+		
+		//The Round has ended, clear the old deck and get a new one
+		publicDeck = getShuffledDeck();
 	}
 
 	@Override
@@ -249,6 +257,23 @@ public class GameEngineImpl implements GameEngine {
 			}
 		}
 
+	}
+	
+	private void newDeck() {
+		/* 1 + 1 + 1 + 1 = 4
+		2 + 2 + 2 + 2 = 8
+		3 + 3 + 3 + 3 = 12
+		4 + 8 + 12 = 24
+		Thus 12 cards is the highest ammount of cards that can be given per hand
+		thus if there is less than 12 cards you need a new deck
+		*/
+		int minDeckSize = 12;
+		
+		if (publicDeck.size() <= minDeckSize)
+		{
+			//Get a new deck
+			publicDeck = getShuffledDeck();
+		}
 	}
 
 }

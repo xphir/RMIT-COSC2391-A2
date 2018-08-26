@@ -70,7 +70,7 @@ public class PlayingCardImpl implements PlayingCard {
 	public String toString() 
 	{
 		//TODO
-		String stringFormat = String.format("Suit: %s, Value: %s, Score: %d\" for %s of %s", getSuit(), getValue(), getScore(), getValue(), getSuit());
+		String stringFormat = String.format("Suit: %s, Value: %s, Score: %d", getSuit(), getValue(), getScore());
 		return stringFormat;
 	}
 	

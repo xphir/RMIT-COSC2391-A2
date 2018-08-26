@@ -29,7 +29,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	public void nextCard(Player player, PlayingCard card, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO, String.format("Card Dealt to %s .. %s", player.getPlayerName(), card.toString()));
+		logger.log(Level.FINE, String.format("Card Dealt to %s .. %s", player.getPlayerName(), card.toString()));
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	public void bustCard(Player player, PlayingCard card, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO,
+		logger.log(Level.FINE,
 				String.format("Card Dealt to %s .. %s ... YOU BUSTED!", player.getPlayerName(), card.toString()));
 	}
 
@@ -50,22 +50,22 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	public void houseBustCard(PlayingCard card, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO, String.format("Card Dealt to House .. %s ... YOU BUSTED!", card.toString()));
+		logger.log(Level.FINE, String.format("Card Dealt to House .. %s ... YOU BUSTED!", card.toString()));
 	}
 
 	@Override
 	public void houseResult(int result, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO, String.format("House, final result=%d", result));
-		logger.log(Level.INFO, String.format("Final Player Results\n%s", logPlayerResults(engine)));
+		logger.log(Level.FINE, String.format("House, final result=%d", result));
+		logger.log(Level.FINE, String.format("Final Player Results\n%s", logPlayerResults(engine)));
 	}
 
 	@Override
 	public void nextHouseCard(PlayingCard card, GameEngine engine) {
 		// intermediate results logged at Level.FINE
 		// TODO SHOULD BE FINE BUT IT DOESNT WORK
-		logger.log(Level.INFO, String.format("Card Dealt to House .. %s", card.toString()));
+		logger.log(Level.FINE, String.format("Card Dealt to House .. %s", card.toString()));
 	}
 
 	private String logPlayerResults(GameEngine engine) {

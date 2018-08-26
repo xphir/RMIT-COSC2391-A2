@@ -45,8 +45,8 @@ public class GameEngineImpl implements GameEngine {
 
 	// private GameEngineCallback gameEngineCallback;
 	private List<Player> players = new ArrayList<Player>();
-	Deque<PlayingCard> publicDeck = getShuffledDeck();
-	ArrayList<GameEngineCallback> gameEngineCallbacks = new ArrayList<GameEngineCallback>();
+	private Deque<PlayingCard> publicDeck = getShuffledDeck();
+	private ArrayList<GameEngineCallback> gameEngineCallbacks = new ArrayList<GameEngineCallback>();
 
 	@Override
 	public void dealPlayer(Player player, int delay) {

@@ -18,7 +18,8 @@ import model.interfaces.GameEngine;
 public class AddPlayerPanel extends JToolBar {
 
 	//public static final int NUM_VIEWS = 4;
-	private JButton button1;
+	private JButton addPlayerButton;
+
 	private JComboBox<String> selectPlayer;
 	private JTextField points;
 	private JTextField id;
@@ -44,8 +45,8 @@ public class AddPlayerPanel extends JToolBar {
 		return selectPlayer;
 	}
 
-	public JButton getButton1() {
-		return button1;
+	public JButton getAddPlayerButtom() {
+		return addPlayerButton;
 	}
 
 	public AddPlayerPanel(GameEngine gameEngine, CardGameFrame frame) {
@@ -63,11 +64,11 @@ public class AddPlayerPanel extends JToolBar {
 		add(initialPoints);
 		add(points, BorderLayout.CENTER);
 		AddPlayerController addPlayer = new AddPlayerController(frame, gameEngine, enterName, points);
-		button1 = new JButton("Add Player");
-		button1.addActionListener(addPlayer);
-		add(button1);
+		addPlayerButton = new JButton("Add Player");
+		addPlayerButton.addActionListener(addPlayer);
+		add(addPlayerButton);
 		add(selectPlayer);
-
 	}
+	
 
 }

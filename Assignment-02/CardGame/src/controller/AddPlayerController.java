@@ -51,7 +51,7 @@ public class AddPlayerController implements ActionListener
 				System.out.println(newplayer);
 				model.addPlayer(newplayer);
 				// Update Player List
-				if (e.getSource().equals(cardGameFrame.getPlayerPanel().getButton1()))
+				if (e.getSource().equals(cardGameFrame.getPlayerPanel().getAddPlayerButtom()))
 				{
 					// adding the player to the JComboBox after all validation tests
 					// pass successfully

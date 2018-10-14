@@ -9,6 +9,8 @@ import model.interfaces.PlayingCard;
 import view.interfaces.GameEngineCallback;
 import view.CardGameFrame;
 
+import javax.swing.JOptionPane;
+
 /*
  *  As part of your new implementation you must write a GameEngineCallbackGUI class that is added to the 
  *  GameEngine via the existing addGameEngineCallback() method. This class will be responsible for managing 
@@ -46,6 +48,7 @@ public class GameEngineCallbackGUI implements GameEngineCallback {
 	{
 		// TODO Auto-generated method stub
 		
+		
 	}
 
 	@Override
@@ -69,6 +72,8 @@ public class GameEngineCallbackGUI implements GameEngineCallback {
 		cardFrame.getDealHandPanel().setPlayerDealCount(0);
 		//Update the summary table fields
 		cardFrame.updateSummaryTable();
+		
+		JOptionPane.showMessageDialog(cardFrame, "Hand Complete");
 	}
 
 

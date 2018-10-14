@@ -16,14 +16,15 @@ public class StatusBarPanel extends JPanel {
 		return statusLabel;
 	}
 
+
 	/*
 	 * status bar for updating the betting points of the players after the House
 	 * rolls
 	 */
 	public StatusBarPanel(GameEngine gameEngine, CardGameFrame frame) {
-		setBorder(BorderFactory.createLineBorder(Color.black, 3));
+		setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
-		statusLabel = new JLabel(" ", JLabel.LEFT);
+		statusLabel = new JLabel("STATUS BAR", JLabel.LEFT);
 
 		add(statusLabel);
 

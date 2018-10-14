@@ -1,11 +1,16 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+
+import controller.ExitController;
 import model.interfaces.GameEngine;
 
 public class MenuBarPanel extends JMenuBar {
@@ -18,14 +23,18 @@ public class MenuBarPanel extends JMenuBar {
 	 * menu
 	 */
 	public MenuBarPanel(GameEngine gameEngine, CardGameFrame frame) {
-		setBorder(BorderFactory.createLineBorder(Color.black, 3));
 		options = new JMenu("Options");
-		add(options);
-		//ExitController exitController = new ExitController(frame, gameEngine);
-		options.addSeparator();
-		exit = new JMenuItem("Exit");
-		//exit.addActionListener(exitController);
 
+		options = new JMenu("Options");
+		options.setMnemonic(KeyEvent.VK_F);
+		add(options);
+		
+		ExitController exitController = new ExitController(frame, gameEngine);
+		options.addSeparator();
+		
+		exit = new JMenuItem("Exit", KeyEvent.VK_X);
+		exit.setAccelerator(KeyStroke.getKeyStroke('X', InputEvent.ALT_MASK));
+		exit.addActionListener(exitController);
 		options.add(exit);
 
 }

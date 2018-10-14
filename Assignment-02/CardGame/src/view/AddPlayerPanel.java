@@ -23,7 +23,7 @@ public class AddPlayerPanel extends JToolBar {
 	private JTextField points;
 	private JTextField id;
 	private JTextField enterName;
-
+	
 	/*
 	 * getters for the JTextFields, JComboBox and JButton in my options tool bar so
 	 * they can easily be accessed
@@ -49,14 +49,10 @@ public class AddPlayerPanel extends JToolBar {
 	}
 
 	public AddPlayerPanel(GameEngine gameEngine, CardGameFrame frame) {
-
 		selectPlayer = new JComboBox<>();
+		selectPlayer.setPrototypeDisplayValue("XXXXXXXXXXXXXXXX");
 		this.setLayout(new FlowLayout());
-		setBorder(BorderFactory.createLineBorder(Color.black, 3));
-		JLabel enterID = new JLabel("Enter ID: ");
-		id = new JTextField("001");
-		add(enterID);
-		add(id);
+		setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		JLabel name = new JLabel("Enter Name: ");
 		enterName = new JTextField("John Snow");
 		add(name);
@@ -66,7 +62,7 @@ public class AddPlayerPanel extends JToolBar {
 		points = new JTextField("1000");
 		add(initialPoints);
 		add(points, BorderLayout.CENTER);
-		AddPlayerController addPlayer = new AddPlayerController(frame, gameEngine, id, enterName, points);
+		AddPlayerController addPlayer = new AddPlayerController(frame, gameEngine, enterName, points);
 		button1 = new JButton("Add Player");
 		button1.addActionListener(addPlayer);
 		add(button1);

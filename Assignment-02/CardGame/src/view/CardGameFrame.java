@@ -2,74 +2,151 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import model.interfaces.PlayingCard;
 import model.interfaces.GameEngine;
 import model.interfaces.Player;
 
-public class CardGameFrame extends JFrame {
+public class CardGameFrame extends JFrame
+{
 
-	private AddPlayerPanel playerPanel;
 	private GameEngine gameEngine;
-	private HouseDealPanel houseDealPanel;
+	private AddPlayerPanel playerPanel;
 	private MenuBarPanel menuBarPanel;
 	private PlaceBetPanel placeBetPanel;
-	private PlayerDealPanel playerDealPanel;
+	private PlayerCardPanel playerCardPanel;
 	private StatusBarPanel statusBarPanel;
-	
-	public AddPlayerPanel getPlayerPanel() {
+	private SummaryPanel summaryPanel;
+	private DealHandPanel dealHandPanel;
+
+	public AddPlayerPanel getPlayerPanel()
+	{
 		return playerPanel;
 	}
-	public GameEngine getGameEngine() {
+
+	public GameEngine getGameEngine()
+	{
 		return gameEngine;
 	}
-	public HouseDealPanel getHouseDealPanel() {
-		return houseDealPanel;
-	}
-	public MenuBarPanel getMenuBarPanel() {
+
+	public MenuBarPanel getMenuBarPanel()
+	{
 		return menuBarPanel;
 	}
-	public PlaceBetPanel getPlaceBetPanel() {
+
+	public PlaceBetPanel getPlaceBetPanel()
+	{
 		return placeBetPanel;
 	}
-	public PlayerDealPanel getPlayerDealPanel() {
-		return playerDealPanel;
+
+	public PlayerCardPanel getPlayerCardPanel()
+	{
+		return playerCardPanel;
 	}
-	public StatusBarPanel getStatusBarPanel() {
+
+	public StatusBarPanel getStatusBarPanel()
+	{
 		return statusBarPanel;
 	}
-	
-	public CardGameFrame(GameEngine gameEngine) {
+
+	public SummaryPanel getSummaryPanel()
+	{
+		return summaryPanel;
+	}
+
+	public DealHandPanel getDealHandPanel()
+	{
+		return dealHandPanel;
+	}
+
+	public CardGameFrame(GameEngine gameEngine)
+	{
 		super("SADI Card Game");
 		this.gameEngine = gameEngine;
-		
-		playerPanel = new AddPlayerPanel(gameEngine, this);
+
 		menuBarPanel = new MenuBarPanel(gameEngine, this);
 
-		this.setLayout(new GridLayout(5, 1));
+		setJMenuBar(menuBarPanel);
+
+		this.setLayout(new GridLayout(6, 1));
 		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setJMenuBar(menuBarPanel);
+		playerPanel = new AddPlayerPanel(gameEngine, this);
+
 		add(playerPanel, BorderLayout.NORTH);
 
-		houseDealPanel = new HouseDealPanel(gameEngine, this);
-		playerDealPanel = new PlayerDealPanel(gameEngine, this);
+		dealHandPanel = new DealHandPanel(gameEngine, this);
+		playerCardPanel = new PlayerCardPanel(gameEngine, this);
 		placeBetPanel = new PlaceBetPanel(gameEngine, this);
+		summaryPanel = new SummaryPanel(gameEngine, this);
 		statusBarPanel = new StatusBarPanel(gameEngine, this);
 
+		add(playerPanel);
 		add(placeBetPanel);
-		add(playerDealPanel);
-		add(houseDealPanel);
+		add(dealHandPanel);
+		add(playerCardPanel);
+		add(summaryPanel);
 		add(statusBarPanel);
 
-		playerDealPanel.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+		statusBarPanel.getStatusLabel().setText("Application has started");
+		playerCardPanel.getCurrentCard().setText("No Cards Delt");
+		//summaryPanel.addTableRow("1", "John Snow", 850);
+		// playerDealPanel.setBorder(BorderFactory.createLineBorder(Color.black,
+		// 3));
+
 
 		setVisible(true);
 		/* pack my frame to get rid of unnecessary space */
 		pack();
 	}
+
+	public void setCardResult(PlayingCard card)
+	{
+		for (Player player : gameEngine.getAllPlayers())
+		{
+			if (player.getPlayerName().equals(getPlayerPanel().getSelectPlayer().getSelectedItem()))
+			{
+				getPlayerCardPanel().getCurrentCard().setText(card.toString());
+			}
+		}
+		setSummary();
+	}
+
+	public void setStatusBar(String input)
+	{
+		getStatusBarPanel().getStatusLabel().setText(input);
+	}
+
+	public void setSummary()
+	{
+
+	}
+
+	public void updateSummaryTable()
+	{
+		for (Player player : gameEngine.getAllPlayers())
+		{
+			for (int row = 0; row < getSummaryPanel().getTableModel().getRowCount(); row++)
+			{
+				if (player.getPlayerId() == getSummaryPanel().getTableModel().getValueAt(row, 0))
+				{
+					System.out.printf("Row %s\n", getSummaryPanel().getTableModel().getValueAt(row, 1));
+					System.out.printf("PLAYER %s\n", player.toString());
+					getSummaryPanel().getTableModel().setValueAt(player.getPoints(), row, 2);
+				}
+				else {
+					//NO MATCH
+				}
+
+			}
+		}
+
+	}
+	
 }

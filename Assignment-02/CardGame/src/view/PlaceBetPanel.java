@@ -26,9 +26,9 @@ public class PlaceBetPanel extends JPanel {
 
 	public PlaceBetPanel(GameEngine gameEngine, CardGameFrame frame) {
 
-		setBorder(BorderFactory.createLineBorder(Color.black, 3));
+		setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		JLabel enterbettingPoints = new JLabel("Enter Betting Points: ");
-		points = new JTextField("50", 5);
+		points = new JTextField("250", 5);
 		add(enterbettingPoints);
 		add(points);
 		placeBet = new JButton("Place Bet");

@@ -22,15 +22,13 @@ public class MainClient {
 				GameEngine gameEngine = new GameEngineImpl();
 				CardGameFrame cardFrame = new CardGameFrame(gameEngine);
 
-				GameEngineCallback gameEngineCallbackGUI = new GameEngineCallbackGUI(cardFrame, gameEngine);
-				GameEngineCallback gameEngineCallback = new GameEngineCallbackImpl();
+				gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
+				gameEngine.addGameEngineCallback(new GameEngineCallbackGUI(cardFrame, gameEngine));
 
 				/*
 				 * new game Engine call back and game Engine call back is added to the
 				 * gameEngineCallback arraylist
 				 */
-				gameEngine.addGameEngineCallback(gameEngineCallbackGUI);
-				gameEngine.addGameEngineCallback(gameEngineCallback);
 			}
 
 		});

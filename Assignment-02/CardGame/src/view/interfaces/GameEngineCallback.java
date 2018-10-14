@@ -88,4 +88,5 @@ public interface GameEngineCallback {
 	 * @see model.interfaces.GameEngine
 	 */
 	public void houseResult(int result, GameEngine engine);
+
 }

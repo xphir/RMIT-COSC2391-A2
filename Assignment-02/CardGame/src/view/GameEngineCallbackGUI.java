@@ -1,9 +1,13 @@
 package view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import model.interfaces.GameEngine;
 import model.interfaces.Player;
 import model.interfaces.PlayingCard;
 import view.interfaces.GameEngineCallback;
+import view.CardGameFrame;
 
 /*
  *  As part of your new implementation you must write a GameEngineCallbackGUI class that is added to the 
@@ -15,49 +19,57 @@ import view.interfaces.GameEngineCallback;
  * 
  */
 public class GameEngineCallbackGUI implements GameEngineCallback {
-
+	
 	private CardGameFrame cardFrame;
 	private GameEngine gameEngine;
-	
-	public GameEngineCallbackGUI(CardGameFrame diceFrame, GameEngine gameEngine) {
+		
+	public GameEngineCallbackGUI(CardGameFrame cardFrame, GameEngine gameEngine) {
 		this.cardFrame = cardFrame;
-		this.gameEngine=gameEngine;
-	}
-	
-	@Override
-	public void nextCard(Player player, PlayingCard card, GameEngine engine) {
-		// TODO Auto-generated method stub
-
+		this.gameEngine = gameEngine;	
 	}
 
 	@Override
-	public void bustCard(Player player, PlayingCard card, GameEngine engine) {
-		// TODO Auto-generated method stub
-
+	public void nextCard(Player player, PlayingCard card, GameEngine engine)
+	{
+		cardFrame.setCardResult(card);
 	}
 
 	@Override
-	public void result(Player player, int result, GameEngine engine) {
-		// TODO Auto-generated method stub
-
+	public void bustCard(Player player, PlayingCard card, GameEngine engine)
+	{
+		//+1 for each hand played
+		cardFrame.getDealHandPanel().setPlayerDealCount(cardFrame.getDealHandPanel().getPlayerDealCount()+1);
 	}
 
 	@Override
-	public void nextHouseCard(PlayingCard card, GameEngine engine) {
+	public void result(Player player, int result, GameEngine engine)
+	{
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void houseBustCard(PlayingCard card, GameEngine engine) {
+	public void nextHouseCard(PlayingCard card, GameEngine engine)
+	{
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void houseResult(int result, GameEngine engine) {
+	public void houseBustCard(PlayingCard card, GameEngine engine)
+	{
 		// TODO Auto-generated method stub
-
+		
 	}
+
+	@Override
+	public void houseResult(int result, GameEngine engine)
+	{
+		//Set the delt hands to 0
+		cardFrame.getDealHandPanel().setPlayerDealCount(0);
+		//Update the summary table fields
+		cardFrame.updateSummaryTable();
+	}
+
 
 }

@@ -35,8 +35,8 @@ public class MyTestClient {
 	public static void main(String args[]) {
 		final GameEngine gameEngine = new GameEngineImpl();
 		List<Player> testPlayers = new ArrayList<Player>();
-		int playerCount = 30;
-		int reqRunCount = 10;
+		int playerCount = 3;
+		int reqRunCount = 1;
 		int runCount = 0;
 		
 		Validator.validate(true);

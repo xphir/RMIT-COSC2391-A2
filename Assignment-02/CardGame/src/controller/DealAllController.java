@@ -3,7 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
+
 
 import model.interfaces.GameEngine;
 import model.interfaces.Player;
@@ -25,12 +25,12 @@ public class DealAllController implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		String statusMessage;
+		
 		final int DELAY = 1000;
 
 		new Thread()
 		{
-
+			String statusMessage;
 			@Override
 			public void run()
 			{
@@ -40,7 +40,8 @@ public class DealAllController implements ActionListener
 					int bet = player.getBet();
 					if (bet == 0)
 					{
-						String statusMessage = String.format("Placing automated bet of 25 points for %s", player.getPlayerName());
+
+						statusMessage = String.format("Placing automated bet of 25 points for %s", player.getPlayerName());
 						cardGameFrame.getStatusBarPanel().getStatusLabel().setText(statusMessage);
 						model.placeBet(player, 25);
 					}

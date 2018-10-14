@@ -17,7 +17,7 @@ import model.interfaces.GameEngine;
 //Add players (including name and initial betting points balance)
 public class AddPlayerPanel extends JToolBar {
 
-	public static final int NUM_VIEWS = 4;
+	//public static final int NUM_VIEWS = 4;
 	private JButton button1;
 	private JComboBox<String> selectPlayer;
 	private JTextField points;

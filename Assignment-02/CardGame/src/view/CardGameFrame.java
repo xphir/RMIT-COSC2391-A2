@@ -96,10 +96,6 @@ public class CardGameFrame extends JFrame
 
 		statusBarPanel.getStatusLabel().setText("Application has started");
 		playerCardPanel.getCurrentCard().setText("No Cards Delt");
-		//summaryPanel.addTableRow("1", "John Snow", 850);
-		// playerDealPanel.setBorder(BorderFactory.createLineBorder(Color.black,
-		// 3));
-
 
 		setVisible(true);
 		/* pack my frame to get rid of unnecessary space */
@@ -136,8 +132,6 @@ public class CardGameFrame extends JFrame
 			{
 				if (player.getPlayerId() == getSummaryPanel().getTableModel().getValueAt(row, 0))
 				{
-					System.out.printf("Row %s\n", getSummaryPanel().getTableModel().getValueAt(row, 1));
-					System.out.printf("PLAYER %s\n", player.toString());
 					getSummaryPanel().getTableModel().setValueAt(player.getPoints(), row, 2);
 				}
 				else {

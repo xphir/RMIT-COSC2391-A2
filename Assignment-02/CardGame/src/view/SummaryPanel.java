@@ -4,24 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import model.interfaces.GameEngine;
-import model.interfaces.Player;
 
 //A summary panel which is always visible which shows player names and their current points balance
 public class SummaryPanel extends JPanel
 {
 	private DefaultTableModel infoModel;
 	private JTable summaryTable;
-	private JLabel title;
-	private JLabel points;
 
 	public JTable getSummaryTable()
 	{
@@ -37,10 +32,6 @@ public class SummaryPanel extends JPanel
 	{
 		infoModel.addRow(new Object[] { id, name, points });
 	}
-
-	// final Object[][] data = { { "1", "Person 1", "900" }, { "2", "Person 2",
-	// "700" } };
-	// final Object[] columnNames = { "ID", "Name", "Points" };
 
 	public SummaryPanel(GameEngine gameEngine, CardGameFrame frame)
 	{
